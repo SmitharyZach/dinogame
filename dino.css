@@ -7,7 +7,7 @@
   height: 300px;
   border: 2px solid black;
   margin: auto;
-  background-image: url(https://cdn5.vectorstock.com/i/1000x1000/70/29/black-and-white-forest-game-background-landscape-vector-14067029.jpg);
+  background-image: url(./images/black-and-white-forest-game-background-landscape-vector-14067029.jpg);
   background-size: cover;
 }
 
@@ -32,15 +32,28 @@
   animation: rock 1.33s infinite;
 }
 
-#doublerock {
+#rock2 {
   height: 50px;
   width: 50px;
   position: relative;
   top: 125px;
   left: 500px;
-  background-image: url(./images/dinoRock.png);
+  background-image: url(./images/RockPile.png);
   background-size: cover;
-  animation: rock2 1.2s infinite;
+  animation: rock2 1.66s infinite;
+}
+
+#difficulty {
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+}
+
+button {
+  padding: 5px;
+  margin: 5px;
+  width: 100px;
+  border-radius: 5px;
 }
 
 @keyframes rock {

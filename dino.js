@@ -1,6 +1,34 @@
-const dino = document.getElementById("dino");
-const rock = document.getElementById("rock");
+const gameDiv = document.getElementById("game");
+// const dino = document.getElementById("dino");
+// const rock = document.getElementById("rock");
 const score = document.getElementById("score");
+const buttons = document.getElementsByTagName("button");
+let difficulty = "undecided";
+console.log(buttons);
+console.log(difficulty);
+
+gameDiv.innerHTML = renderGame(difficulty);
+
+function handleDifficutly(button) {
+  buttonValue = button.innerHTML;
+  if (buttonValue === "Easy") {
+    gameDiv.innerHTML = renderGame(buttonValue);
+    gameLoop(buttonValue);
+  } else if (buttonValue === "Medium") {
+    gameDiv.innerHTML = renderGame(buttonValue);
+    gameLoop();
+  } else {
+    gameDiv.innerHTML = renderGame(buttonValue);
+    gameLoop();
+  }
+}
+
+for (let i = 0; i < buttons.length; i++) {
+  const button = buttons[i];
+  button.addEventListener("click", function () {
+    handleDifficutly(button);
+  });
+}
 
 function jump() {
   dino.classList.add("jump-animation");
@@ -15,25 +43,127 @@ document.addEventListener("keypress", () => {
   }
 });
 
-setInterval(() => {
-  score.innerText++;
-  finalScore = score.innerText;
-  const dinoTop = parseInt(
-    window.getComputedStyle(dino).getPropertyValue("top")
-  );
-  const rockLeft = parseInt(
-    window.getComputedStyle(rock).getPropertyValue("left")
-  );
+const gameLoop = (difficulty) => {
+  let dino = document.getElementById("dino");
+  let rock1 = document.getElementById("rock");
+  let rock2 = document.getElementById("rock2");
+  let rock3 = document.getElementById("rock3");
+  if (difficulty === "Easy") {
+    setInterval(() => {
+      finalScore = score.innerText;
+      let dinoTop = parseInt(
+        window.getComputedStyle(dino).getPropertyValue("top")
+      );
+      let rockLeft = parseInt(
+        window.getComputedStyle(rock1).getPropertyValue("left")
+      );
+      if (rockLeft < 0) {
+        rock.style.display = "none";
+        score.innerText++;
+      } else {
+        rock.style.display = "";
+      }
 
-  if (rockLeft < 0) {
-    rock.style.display = "none";
+      if (rockLeft < 145 && rockLeft > 100 && dinoTop > 150) {
+        dino.style.top = "225px";
+        alert(`You got a final score of: ${finalScore}. Play again?`);
+        location.reload();
+      }
+    }, 50);
+  } else if (difficulty === "Medium") {
+    setInterval(() => {
+      finalScore = score.innerText;
+      let dinoTop = parseInt(
+        window.getComputedStyle(dino).getPropertyValue("top")
+      );
+      let rockLeft = parseInt(
+        window.getComputedStyle(rock1).getPropertyValue("left")
+      );
+      if (rockLeft < 0) {
+        rock.style.display = "none";
+        score.innerText++;
+      } else {
+        rock.style.display = "";
+      }
+
+      if (rockLeft < 145 && rockLeft > 100 && dinoTop > 150) {
+        dino.style.top = "225px";
+        alert(`You got a final score of: ${finalScore}. Play again?`);
+        location.reload();
+      }
+    }, 50);
   } else {
-    rock.style.display = "";
-  }
+    setInterval(() => {
+      finalScore = score.innerText;
+      let dinoTop = parseInt(
+        window.getComputedStyle(dino).getPropertyValue("top")
+      );
+      let rockLeft = parseInt(
+        window.getComputedStyle(rock1).getPropertyValue("left")
+      );
+      let rockLeft2 = parseInt(
+        window.getComputedStyle(rock2).getPropertyValue("left")
+      );
 
-  if (rockLeft < 145 && rockLeft > 100 && dinoTop > 150) {
-    dino.style.top = "225px";
-    alert(`You got a final score of: ${finalScore}. Play again?`);
-    location.reload();
+      console.log("rock 1", rockLeft);
+      console.log("rock 2", rockLeft2);
+      console.log("dino", dinoTop);
+
+      if (rockLeft < 0) {
+        rock.style.display = "none";
+        score.innerText++;
+      } else {
+        rock.style.display = "";
+      }
+
+      if (rockLeft2 < 0) {
+        rock.style.display = "none";
+        score.innerText++;
+      } else {
+        rock.style.display = "";
+      }
+
+      if (rockLeft < 145 && rockLeft > 100 && dinoTop > 160) {
+        dino.style.top = "225px";
+        alert(`You got a final score of: ${finalScore}. Play again?`);
+        location.reload();
+      }
+      if (rockLeft2 < 145 && rockLeft2 > 100 && dinoTop > 160) {
+        dino.style.top = "225px";
+        alert(`You got a final score of: ${finalScore}. Play again?`);
+        location.reload();
+      }
+    }, 50);
   }
-}, 50);
+};
+
+function renderGame(difficulty) {
+  if (difficulty === "undecided") {
+    return `
+      <div id='difficulty'>
+        <h1>The Dino Rides</h1>
+        <p>Press 's' or 'j' to jump</p>
+        <p>Choose Difficulty</p>
+        <button>Easy</button>
+        <button>Medium</button>
+        <button>PREHISTORIC</button>
+      </div>
+    `;
+  } else if (difficulty === "Easy") {
+    return `
+      <div id="dino"></div>
+      <div id="rock"></div>
+    `;
+  } else if (difficulty === "Medium") {
+    return `
+      <div id="dino"></div>
+      <div id="rock"></div>
+      <div id="rock2"></div>`;
+  } else {
+    return `
+    <div id="dino"></div>
+    <div id="rock"></div>
+    <div id="rock2"></div>
+    <div id="triplerock"></div>`;
+  }
+}
