@@ -16,10 +16,10 @@ function handleDifficutly(button) {
     gameLoop(buttonValue);
   } else if (buttonValue === "Medium") {
     gameDiv.innerHTML = renderGame(buttonValue);
-    gameLoop();
+    gameLoop(buttonValue);
   } else {
     gameDiv.innerHTML = renderGame(buttonValue);
-    gameLoop();
+    gameLoop(buttonValue);
   }
 }
 
@@ -65,9 +65,9 @@ const gameLoop = (difficulty) => {
       }
 
       if (rockLeft < 145 && rockLeft > 100 && dinoTop > 150) {
-        dino.style.top = "225px";
         alert(`You got a final score of: ${finalScore}. Play again?`);
         location.reload();
+        return;
       }
     }, 50);
   } else if (difficulty === "Medium") {
@@ -79,31 +79,12 @@ const gameLoop = (difficulty) => {
       let rockLeft = parseInt(
         window.getComputedStyle(rock1).getPropertyValue("left")
       );
-      if (rockLeft < 0) {
-        rock.style.display = "none";
-        score.innerText++;
-      } else {
-        rock.style.display = "";
-      }
-
-      if (rockLeft < 145 && rockLeft > 100 && dinoTop > 150) {
-        dino.style.top = "225px";
-        alert(`You got a final score of: ${finalScore}. Play again?`);
-        location.reload();
-      }
-    }, 50);
-  } else {
-    setInterval(() => {
-      finalScore = score.innerText;
-      let dinoTop = parseInt(
-        window.getComputedStyle(dino).getPropertyValue("top")
-      );
-      let rockLeft = parseInt(
-        window.getComputedStyle(rock1).getPropertyValue("left")
-      );
       let rockLeft2 = parseInt(
         window.getComputedStyle(rock2).getPropertyValue("left")
       );
+
+      looseConditionOne = rockLeft < 145 && rockLeft > 100 && dinoTop > 165;
+      looseConditionTwo = rockLeft2 < 145 && rockLeft2 > 100 && dinoTop > 165;
 
       console.log("rock 1", rockLeft);
       console.log("rock 2", rockLeft2);
@@ -122,16 +103,47 @@ const gameLoop = (difficulty) => {
       } else {
         rock.style.display = "";
       }
-
-      if (rockLeft < 145 && rockLeft > 100 && dinoTop > 160) {
-        dino.style.top = "225px";
+      if (looseConditionOne || looseConditionTwo) {
         alert(`You got a final score of: ${finalScore}. Play again?`);
         location.reload();
+        return;
       }
-      if (rockLeft2 < 145 && rockLeft2 > 100 && dinoTop > 160) {
-        dino.style.top = "225px";
+    }, 50);
+  } else {
+    setInterval(() => {
+      finalScore = score.innerText;
+      let dinoTop = parseInt(
+        window.getComputedStyle(dino).getPropertyValue("top")
+      );
+      let rockLeft = parseInt(
+        window.getComputedStyle(rock1).getPropertyValue("left")
+      );
+      let rockLeft2 = parseInt(
+        window.getComputedStyle(rock2).getPropertyValue("left")
+      );
+      let rockLeft3 = parseInt(
+        window.getComputedStyle(rock3).getPropertyValue("left")
+      );
+
+      looseConditionOne = rockLeft < 140 && rockLeft > 100 && dinoTop > 165;
+      looseConditionTwo = rockLeft2 < 140 && rockLeft2 > 100 && dinoTop > 165;
+      looseConditionThree = rockLeft3 < 140 && rockLeft3 > 100 && dinoTop > 165;
+
+      console.log("rock 1", rockLeft);
+      console.log("rock 2", rockLeft2);
+
+      console.log("dino", dinoTop);
+
+      if (rockLeft < 0 && !looseConditionOne) {
+        rock.style.display = "none";
+        score.innerText++;
+      } else {
+        rock.style.display = "";
+      }
+      if (looseConditionOne || looseConditionTwo || looseConditionThree) {
         alert(`You got a final score of: ${finalScore}. Play again?`);
         location.reload();
+        return;
       }
     }, 50);
   }
@@ -164,6 +176,6 @@ function renderGame(difficulty) {
     <div id="dino"></div>
     <div id="rock"></div>
     <div id="rock2"></div>
-    <div id="triplerock"></div>`;
+    <div id="rock3"></div>`;
   }
 }

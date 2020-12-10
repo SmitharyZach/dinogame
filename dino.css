@@ -29,7 +29,7 @@
   left: 550px;
   background-image: url(./images/dinoRock.png);
   background-size: cover;
-  animation: rock 1.33s infinite;
+  animation: rock 2s infinite;
 }
 
 #rock2 {
@@ -40,7 +40,18 @@
   left: 500px;
   background-image: url(./images/RockPile.png);
   background-size: cover;
-  animation: rock2 1.66s infinite;
+  animation: rock2 2s infinite;
+}
+
+#rock3 {
+  height: 50px;
+  width: 50px;
+  position: relative;
+  top: 75px;
+  left: 550px;
+  background-image: url(./images/rock3.png);
+  background-size: cover;
+  animation: rock2 0.6s infinite;
 }
 
 #difficulty {
@@ -68,6 +79,15 @@ button {
 @keyframes rock2 {
   0% {
     left: 500px;
+  }
+  100% {
+    left: 0px;
+  }
+}
+
+@keyframes rock3 {
+  0% {
+    left: 550px;
   }
   100% {
     left: 0px;
